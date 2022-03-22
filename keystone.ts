@@ -47,7 +47,7 @@ export default withAuth(
       provider: "postgresql",
       useMigrations: true,
       url: DATABASE_URL,
-      enableLogging: env("NODE_ENV") !== "production",
+      enableLogging: process.env.NODE_ENV !== "production",
       idField: { kind: "cuid" },
     },
     ui: {
@@ -66,7 +66,7 @@ export default withAuth(
       },
     },
     graphql: {
-      playground: env("NODE_ENV") !== "production",
+      playground: process.env.NODE_ENV !== "production",
     },
   })
 );
