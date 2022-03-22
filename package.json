@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A simple example project showing how you might deploy Keystone 6 to Heroku",
   "main": "keystone.ts",
-  "repository": "git@github.com:keystonejs/keystone-6-heroku-example.git",
-  "author": "John Molomby <john@thinkmill.com.au>",
+  "repository": "git@github.com:devrayat000/portfolio-backend",
+  "author": "Zul Ikram Musaddik Rayat <2010050@me.buet.ac.bd>",
   "license": "MIT",
   "private": true,
   "engines": {
@@ -13,7 +13,8 @@
   "scripts": {
     "dev": "keystone dev",
     "start": "keystone start",
-    "build": "keystone build && keystone prisma migrate deploy"
+    "build": "keystone build && keystone prisma migrate deploy",
+    "postinstall": "keystone postinstall"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.0",

@@ -43,7 +43,7 @@ We've tried to include helpful comments inline and the `with-auth` example proje
 
 ## Deploy Directly to Heroku
 
-[![Deploy Directly to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/keystonejs/keystone-6-heroku-example)
+[![Deploy Directly to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/devrayat000/portfolio-backend)
 
 This magical button 👆 takes a copy of this repo, builds it into an image and runs it on a Heroku dyno with the Postgres addon.
 All you need to get started is a [Heroku account](https://signup.heroku.com).
