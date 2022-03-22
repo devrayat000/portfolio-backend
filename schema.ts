@@ -3,15 +3,17 @@
 
 import { list } from "@keystone-6/core";
 import {
-  checkbox,
   password,
   relationship,
   text,
   timestamp,
-  select,
+  image,
 } from "@keystone-6/core/fields";
+import { document } from "@keystone-6/fields-document";
 
-export const lists = {
+import { Lists } from ".keystone/types";
+
+export const lists: Lists = {
   Admin: list({
     fields: {
       name: text({
@@ -28,6 +30,42 @@ export const lists = {
         db: { isNullable: false },
       }),
       createdAt: timestamp({ defaultValue: { kind: "now" } }),
+    },
+  }),
+  Project: list({
+    fields: {
+      title: text({
+        validation: { isRequired: true },
+        db: { isNullable: false },
+      }),
+      demo: text(),
+      description: document({
+        formatting: true,
+        links: true,
+        dividers: true,
+        layouts: [
+          [1, 1],
+          [1, 1, 1],
+          [2, 1],
+          [1, 2],
+          [1, 2, 1],
+        ],
+      }),
+      source: text(),
+      images: relationship({
+        ref: "Image",
+        many: true,
+        ui: {
+          displayMode: "select",
+          labelField: "label",
+        },
+      }),
+    },
+  }),
+  Image: list({
+    fields: {
+      label: text(),
+      image: image(),
     },
   }),
 };
