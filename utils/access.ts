@@ -8,6 +8,9 @@ interface Param {
     | Lists.Tag.TypeInfo
     | Lists.ApiKey.TypeInfo
     | Lists.Admin.TypeInfo
+    | Lists.Service.TypeInfo
+    | Lists.Skill.TypeInfo
+    | Lists.Education.TypeInfo
   >;
 }
 interface Param2 extends Param {

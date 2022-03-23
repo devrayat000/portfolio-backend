@@ -13,6 +13,7 @@ import {
   integer,
 } from "@keystone-6/core/fields";
 import { document } from "@keystone-6/fields-document";
+import { azureStorageImage } from "@k6-contrib/fields-azure";
 
 import { Lists } from ".keystone/types";
 import { hasApiKey, isAdmin } from "./utils/access";
@@ -110,7 +111,7 @@ export const lists: Lists = {
     },
     fields: {
       label: text(),
-      image: image(),
+      image: azureImage(),
       createdAt: timestamp({ defaultValue: { kind: "now" } }),
     },
   }),
@@ -165,7 +166,7 @@ export const lists: Lists = {
         validation: { isRequired: true },
         db: { isNullable: false },
       }),
-      image: image(),
+      image: azureImage(),
     },
   }),
   Skill: list({
@@ -229,3 +230,21 @@ export const lists: Lists = {
     },
   }),
 };
+
+function azureImage<T>() {
+  return azureStorageImage<T>({
+    azureStorageConfig: {
+      azureStorageOptions: {
+        accessKey: process.env.AZURE_STORAGE_KEY || "",
+        account: process.env.AZURE_STORAGE_ACCOUNT || "",
+        container: process.env.AZURE_STORAGE_CONTAINER || "",
+        url: process.env.AZURE_STORAGE_ACCOUNT_HOST
+          ? `${process.env.AZURE_STORAGE_ACCOUNT_HOST}${process.env.AZURE_STORAGE_ACCOUNT_NAME}`
+          : undefined,
+      },
+    },
+  });
+}
+
+// psql --host devrayat-portfolio.postgres.database.azure.com --user devRayat@devrayat-portfolio --port=5432 --dbname postgres
+// postgres://devRayat@devrayat-portfolio:rayatIsAwesome10050!@devrayat-portfolio.postgres.database.azure.com:5432/portfolio
