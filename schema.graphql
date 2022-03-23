@@ -124,6 +124,13 @@ type Project {
   demo: String
   description: Project_description_Document
   source: String
+  tags(
+    where: TagWhereInput! = {}
+    orderBy: [TagOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
   images(
     where: ImageWhereInput! = {}
     orderBy: [ImageOrderByInput!]! = []
@@ -131,6 +138,7 @@ type Project {
     skip: Int! = 0
   ): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
+  createdAt: DateTime
 }
 
 type Project_description_Document {
@@ -149,7 +157,15 @@ input ProjectWhereInput {
   title: StringFilter
   demo: StringFilter
   source: StringFilter
+  tags: TagManyRelationFilter
   images: ImageManyRelationFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input TagManyRelationFilter {
+  every: TagWhereInput
+  some: TagWhereInput
+  none: TagWhereInput
 }
 
 input ImageManyRelationFilter {
@@ -163,6 +179,7 @@ input ProjectOrderByInput {
   title: OrderDirection
   demo: OrderDirection
   source: OrderDirection
+  createdAt: OrderDirection
 }
 
 input ProjectUpdateInput {
@@ -170,7 +187,16 @@ input ProjectUpdateInput {
   demo: String
   description: JSON
   source: String
+  tags: TagRelateToManyForUpdateInput
   images: ImageRelateToManyForUpdateInput
+  createdAt: DateTime
+}
+
+input TagRelateToManyForUpdateInput {
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
 }
 
 input ImageRelateToManyForUpdateInput {
@@ -190,7 +216,14 @@ input ProjectCreateInput {
   demo: String
   description: JSON
   source: String
+  tags: TagRelateToManyForCreateInput
   images: ImageRelateToManyForCreateInput
+  createdAt: DateTime
+}
+
+input TagRelateToManyForCreateInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
 }
 
 input ImageRelateToManyForCreateInput {
@@ -202,6 +235,7 @@ type Image {
   id: ID!
   label: String
   image: ImageFieldOutput
+  createdAt: DateTime
 }
 
 interface ImageFieldOutput {
@@ -251,16 +285,19 @@ input ImageWhereInput {
   NOT: [ImageWhereInput!]
   id: IDFilter
   label: StringFilter
+  createdAt: DateTimeNullableFilter
 }
 
 input ImageOrderByInput {
   id: OrderDirection
   label: OrderDirection
+  createdAt: OrderDirection
 }
 
 input ImageUpdateInput {
   label: String
   image: ImageFieldInput
+  createdAt: DateTime
 }
 
 input ImageFieldInput {
@@ -281,6 +318,105 @@ input ImageUpdateArgs {
 input ImageCreateInput {
   label: String
   image: ImageFieldInput
+  createdAt: DateTime
+}
+
+type Tag {
+  id: ID!
+  name: String
+  projects(
+    where: ProjectWhereInput! = {}
+    orderBy: [ProjectOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Project!]
+  projectsCount(where: ProjectWhereInput! = {}): Int
+}
+
+input TagWhereUniqueInput {
+  id: ID
+}
+
+input TagWhereInput {
+  AND: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  NOT: [TagWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  projects: ProjectManyRelationFilter
+}
+
+input ProjectManyRelationFilter {
+  every: ProjectWhereInput
+  some: ProjectWhereInput
+  none: ProjectWhereInput
+}
+
+input TagOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input TagUpdateInput {
+  name: String
+  projects: ProjectRelateToManyForUpdateInput
+}
+
+input ProjectRelateToManyForUpdateInput {
+  disconnect: [ProjectWhereUniqueInput!]
+  set: [ProjectWhereUniqueInput!]
+  create: [ProjectCreateInput!]
+  connect: [ProjectWhereUniqueInput!]
+}
+
+input TagUpdateArgs {
+  where: TagWhereUniqueInput!
+  data: TagUpdateInput!
+}
+
+input TagCreateInput {
+  name: String
+  projects: ProjectRelateToManyForCreateInput
+}
+
+input ProjectRelateToManyForCreateInput {
+  create: [ProjectCreateInput!]
+  connect: [ProjectWhereUniqueInput!]
+}
+
+type ApiKey {
+  id: ID!
+  createdAt: DateTime
+}
+
+input ApiKeyWhereUniqueInput {
+  id: ID
+}
+
+input ApiKeyWhereInput {
+  AND: [ApiKeyWhereInput!]
+  OR: [ApiKeyWhereInput!]
+  NOT: [ApiKeyWhereInput!]
+  id: IDFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ApiKeyOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ApiKeyUpdateInput {
+  createdAt: DateTime
+}
+
+input ApiKeyUpdateArgs {
+  where: ApiKeyWhereUniqueInput!
+  data: ApiKeyUpdateInput!
+}
+
+input ApiKeyCreateInput {
+  createdAt: DateTime
 }
 
 """
@@ -313,6 +449,18 @@ type Mutation {
   updateImages(data: [ImageUpdateArgs!]!): [Image]
   deleteImage(where: ImageWhereUniqueInput!): Image
   deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
+  createTag(data: TagCreateInput!): Tag
+  createTags(data: [TagCreateInput!]!): [Tag]
+  updateTag(where: TagWhereUniqueInput!, data: TagUpdateInput!): Tag
+  updateTags(data: [TagUpdateArgs!]!): [Tag]
+  deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
+  createApiKey(data: ApiKeyCreateInput!): ApiKey
+  createApiKeys(data: [ApiKeyCreateInput!]!): [ApiKey]
+  updateApiKey(where: ApiKeyWhereUniqueInput!, data: ApiKeyUpdateInput!): ApiKey
+  updateApiKeys(data: [ApiKeyUpdateArgs!]!): [ApiKey]
+  deleteApiKey(where: ApiKeyWhereUniqueInput!): ApiKey
+  deleteApiKeys(where: [ApiKeyWhereUniqueInput!]!): [ApiKey]
   endSession: Boolean!
   authenticateAdminWithPassword(
     email: String!
@@ -367,6 +515,22 @@ type Query {
   ): [Image!]
   image(where: ImageWhereUniqueInput!): Image
   imagesCount(where: ImageWhereInput! = {}): Int
+  tags(
+    where: TagWhereInput! = {}
+    orderBy: [TagOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Tag!]
+  tag(where: TagWhereUniqueInput!): Tag
+  tagsCount(where: TagWhereInput! = {}): Int
+  apiKeys(
+    where: ApiKeyWhereInput! = {}
+    orderBy: [ApiKeyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ApiKey!]
+  apiKey(where: ApiKeyWhereUniqueInput!): ApiKey
+  apiKeysCount(where: ApiKeyWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

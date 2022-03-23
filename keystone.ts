@@ -54,7 +54,13 @@ export default withAuth(
       // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data,
     },
-    server: { port: PORT },
+    server: {
+      port: PORT,
+      cors: {
+        credentials: true,
+        origin: ["http://localhost:3000"],
+      },
+    },
     lists,
     // We add our session configuration to the system here.
     session,
@@ -67,6 +73,10 @@ export default withAuth(
     },
     graphql: {
       playground: process.env.NODE_ENV !== "production",
+      cors: {
+        credentials: true,
+        origin: ["http://localhost:3000"],
+      },
     },
   })
 );
