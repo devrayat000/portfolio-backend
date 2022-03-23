@@ -9,6 +9,8 @@ import {
   timestamp,
   image,
   virtual,
+  select,
+  integer,
 } from "@keystone-6/core/fields";
 import { document } from "@keystone-6/fields-document";
 
@@ -143,6 +145,87 @@ export const lists: Lists = {
     },
     fields: {
       createdAt: timestamp({ defaultValue: { kind: "now" } }),
+    },
+  }),
+  Service: list({
+    access: {
+      operation: {
+        query: hasApiKey,
+        create: isAdmin,
+        update: isAdmin,
+        delete: isAdmin,
+      },
+    },
+    fields: {
+      title: text({
+        validation: { isRequired: true },
+        db: { isNullable: false },
+      }),
+      details: text({
+        validation: { isRequired: true },
+        db: { isNullable: false },
+      }),
+      image: image(),
+    },
+  }),
+  Skill: list({
+    access: {
+      operation: {
+        query: hasApiKey,
+        create: isAdmin,
+        update: isAdmin,
+        delete: isAdmin,
+      },
+    },
+    fields: {
+      type: select({
+        type: "enum",
+        db: { isNullable: false },
+        defaultValue: "dev",
+        options: [
+          { label: "Language", value: "lang" },
+          { label: "Development", value: "dev" },
+        ],
+      }),
+      label: text({
+        validation: { isRequired: true },
+        db: { isNullable: false },
+      }),
+      value: integer({
+        defaultValue: 100,
+        db: { isNullable: false },
+        validation: { isRequired: true, min: 0, max: 100 },
+      }),
+    },
+  }),
+  Education: list({
+    access: {
+      operation: {
+        query: hasApiKey,
+        create: isAdmin,
+        update: isAdmin,
+        delete: isAdmin,
+      },
+    },
+    fields: {
+      title: text({
+        validation: { isRequired: true },
+        db: { isNullable: false },
+      }),
+      passed: timestamp({ db: { isNullable: false } }),
+      certificate: text(),
+      description: document({
+        formatting: true,
+        links: true,
+        dividers: true,
+        layouts: [
+          [1, 1],
+          [1, 1, 1],
+          [2, 1],
+          [1, 2],
+          [1, 2, 1],
+        ],
+      }),
     },
   }),
 };

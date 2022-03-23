@@ -259,26 +259,6 @@ input ImageWhereUniqueInput {
   id: ID
 }
 
-type LocalImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
-}
-
-type CloudImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
-}
-
 input ImageWhereInput {
   AND: [ImageWhereInput!]
   OR: [ImageWhereInput!]
@@ -419,6 +399,200 @@ input ApiKeyCreateInput {
   createdAt: DateTime
 }
 
+type Service {
+  id: ID!
+  title: String
+  details: String
+  image: ImageFieldOutput
+}
+
+input ServiceWhereUniqueInput {
+  id: ID
+}
+
+type LocalImageFieldOutput implements ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  url: String!
+}
+
+type CloudImageFieldOutput implements ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  url: String!
+}
+
+input ServiceWhereInput {
+  AND: [ServiceWhereInput!]
+  OR: [ServiceWhereInput!]
+  NOT: [ServiceWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  details: StringFilter
+}
+
+input ServiceOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  details: OrderDirection
+}
+
+input ServiceUpdateInput {
+  title: String
+  details: String
+  image: ImageFieldInput
+}
+
+input ServiceUpdateArgs {
+  where: ServiceWhereUniqueInput!
+  data: ServiceUpdateInput!
+}
+
+input ServiceCreateInput {
+  title: String
+  details: String
+  image: ImageFieldInput
+}
+
+type Skill {
+  id: ID!
+  type: SkillTypeType
+  label: String
+  value: Int
+}
+
+enum SkillTypeType {
+  lang
+  dev
+}
+
+input SkillWhereUniqueInput {
+  id: ID
+}
+
+input SkillWhereInput {
+  AND: [SkillWhereInput!]
+  OR: [SkillWhereInput!]
+  NOT: [SkillWhereInput!]
+  id: IDFilter
+  type: SkillTypeTypeNullableFilter
+  label: StringFilter
+  value: IntFilter
+}
+
+input SkillTypeTypeNullableFilter {
+  equals: SkillTypeType
+  in: [SkillTypeType!]
+  notIn: [SkillTypeType!]
+  not: SkillTypeTypeNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input SkillOrderByInput {
+  id: OrderDirection
+  type: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input SkillUpdateInput {
+  type: SkillTypeType
+  label: String
+  value: Int
+}
+
+input SkillUpdateArgs {
+  where: SkillWhereUniqueInput!
+  data: SkillUpdateInput!
+}
+
+input SkillCreateInput {
+  type: SkillTypeType
+  label: String
+  value: Int
+}
+
+type Education {
+  id: ID!
+  title: String
+  passed: DateTime
+  certificate: String
+  description: Education_description_Document
+}
+
+type Education_description_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input EducationWhereUniqueInput {
+  id: ID
+}
+
+input EducationWhereInput {
+  AND: [EducationWhereInput!]
+  OR: [EducationWhereInput!]
+  NOT: [EducationWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  passed: DateTimeFilter
+  certificate: StringFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
+}
+
+input EducationOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  passed: OrderDirection
+  certificate: OrderDirection
+}
+
+input EducationUpdateInput {
+  title: String
+  passed: DateTime
+  certificate: String
+  description: JSON
+}
+
+input EducationUpdateArgs {
+  where: EducationWhereUniqueInput!
+  data: EducationUpdateInput!
+}
+
+input EducationCreateInput {
+  title: String
+  passed: DateTime
+  certificate: String
+  description: JSON
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -461,6 +635,30 @@ type Mutation {
   updateApiKeys(data: [ApiKeyUpdateArgs!]!): [ApiKey]
   deleteApiKey(where: ApiKeyWhereUniqueInput!): ApiKey
   deleteApiKeys(where: [ApiKeyWhereUniqueInput!]!): [ApiKey]
+  createService(data: ServiceCreateInput!): Service
+  createServices(data: [ServiceCreateInput!]!): [Service]
+  updateService(
+    where: ServiceWhereUniqueInput!
+    data: ServiceUpdateInput!
+  ): Service
+  updateServices(data: [ServiceUpdateArgs!]!): [Service]
+  deleteService(where: ServiceWhereUniqueInput!): Service
+  deleteServices(where: [ServiceWhereUniqueInput!]!): [Service]
+  createSkill(data: SkillCreateInput!): Skill
+  createSkills(data: [SkillCreateInput!]!): [Skill]
+  updateSkill(where: SkillWhereUniqueInput!, data: SkillUpdateInput!): Skill
+  updateSkills(data: [SkillUpdateArgs!]!): [Skill]
+  deleteSkill(where: SkillWhereUniqueInput!): Skill
+  deleteSkills(where: [SkillWhereUniqueInput!]!): [Skill]
+  createEducation(data: EducationCreateInput!): Education
+  createEducations(data: [EducationCreateInput!]!): [Education]
+  updateEducation(
+    where: EducationWhereUniqueInput!
+    data: EducationUpdateInput!
+  ): Education
+  updateEducations(data: [EducationUpdateArgs!]!): [Education]
+  deleteEducation(where: EducationWhereUniqueInput!): Education
+  deleteEducations(where: [EducationWhereUniqueInput!]!): [Education]
   endSession: Boolean!
   authenticateAdminWithPassword(
     email: String!
@@ -531,6 +729,30 @@ type Query {
   ): [ApiKey!]
   apiKey(where: ApiKeyWhereUniqueInput!): ApiKey
   apiKeysCount(where: ApiKeyWhereInput! = {}): Int
+  services(
+    where: ServiceWhereInput! = {}
+    orderBy: [ServiceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Service!]
+  service(where: ServiceWhereUniqueInput!): Service
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  skills(
+    where: SkillWhereInput! = {}
+    orderBy: [SkillOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Skill!]
+  skill(where: SkillWhereUniqueInput!): Skill
+  skillsCount(where: SkillWhereInput! = {}): Int
+  educations(
+    where: EducationWhereInput! = {}
+    orderBy: [EducationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Education!]
+  education(where: EducationWhereUniqueInput!): Education
+  educationsCount(where: EducationWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

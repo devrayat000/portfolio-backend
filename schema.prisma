@@ -53,3 +53,35 @@ model ApiKey {
   id        String    @id @default(cuid())
   createdAt DateTime? @default(now())
 }
+
+model Service {
+  id              String  @id @default(cuid())
+  title           String  @default("")
+  details         String  @default("")
+  image_filesize  Int?
+  image_extension String?
+  image_width     Int?
+  image_height    Int?
+  image_mode      String?
+  image_id        String?
+}
+
+model Skill {
+  id    String        @id @default(cuid())
+  type  SkillTypeType @default(dev)
+  label String        @default("")
+  value Int           @default(100)
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  title       String   @default("")
+  passed      DateTime
+  certificate String   @default("")
+  description Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
+enum SkillTypeType {
+  lang
+  dev
+}
