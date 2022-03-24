@@ -24,6 +24,7 @@ jobs:
       - uses: azure/appservice-settings@v1
         with:
           app-name: 'dev-rayat'
+          mask-inputs: false
           app-settings-json: ${{ secrets.APP_SETTINGS }}
 
       - name: yarn install, build, and test
