@@ -20,18 +20,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-          
-      - uses: azure/appservice-settings@v1
-        with:
-          app-name: 'dev-rayat'
-          mask-inputs: false
-          app-settings-json: ${{ secrets.APP_SETTINGS }}
 
-      - name: yarn install, build, and test
+      - name: npm install, build, and test
         run: |
-          npm i -g yarn
-          yarn install --network-timeout 1000000
-          yarn build
+          npm install
+          npm run build --if-present
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -58,6 +52,5 @@ jobs:
         with:
           app-name: 'dev-rayat'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_64837FCBE3F740C0A9EFA33EE75710C8 }}
-          app-settings-json: ${{ secrets.APP_SETTINGS }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA60DE7207A547B19C3B568F8BF6F4D3 }}
           package: .
