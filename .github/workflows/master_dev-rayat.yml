@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: Build
+      app-settings-json: ${{ secrets.APP_SETTINGS }}
 
     steps:
       - uses: actions/checkout@v2
