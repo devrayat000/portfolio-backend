@@ -234,21 +234,21 @@ input ImageRelateToManyForCreateInput {
 type Image {
   id: ID!
   label: String
-  image: ImageFieldOutput
+  image: AzureStorageImageFieldOutput
   createdAt: DateTime
 }
 
-interface ImageFieldOutput {
+interface AzureStorageImageFieldOutput {
   id: ID!
   filesize: Int!
   width: Int!
   height: Int!
-  extension: ImageExtension!
+  extension: AzureStorageImageExtension!
   ref: String!
   url: String!
 }
 
-enum ImageExtension {
+enum AzureStorageImageExtension {
   jpg
   png
   webp
@@ -276,11 +276,11 @@ input ImageOrderByInput {
 
 input ImageUpdateInput {
   label: String
-  image: ImageFieldInput
+  image: AzureStorageImageFieldInput
   createdAt: DateTime
 }
 
-input ImageFieldInput {
+input AzureStorageImageFieldInput {
   upload: Upload
   ref: String
 }
@@ -297,7 +297,7 @@ input ImageUpdateArgs {
 
 input ImageCreateInput {
   label: String
-  image: ImageFieldInput
+  image: AzureStorageImageFieldInput
   createdAt: DateTime
 }
 
@@ -403,29 +403,19 @@ type Service {
   id: ID!
   title: String
   details: String
-  image: ImageFieldOutput
+  image: AzureStorageImageFieldOutput
 }
 
 input ServiceWhereUniqueInput {
   id: ID
 }
 
-type LocalImageFieldOutput implements ImageFieldOutput {
+type AzureStorageImageFieldOutputType implements AzureStorageImageFieldOutput {
   id: ID!
   filesize: Int!
   width: Int!
   height: Int!
-  extension: ImageExtension!
-  ref: String!
-  url: String!
-}
-
-type CloudImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
+  extension: AzureStorageImageExtension!
   ref: String!
   url: String!
 }
@@ -448,7 +438,7 @@ input ServiceOrderByInput {
 input ServiceUpdateInput {
   title: String
   details: String
-  image: ImageFieldInput
+  image: AzureStorageImageFieldInput
 }
 
 input ServiceUpdateArgs {
@@ -459,7 +449,7 @@ input ServiceUpdateArgs {
 input ServiceCreateInput {
   title: String
   details: String
-  image: ImageFieldInput
+  image: AzureStorageImageFieldInput
 }
 
 type Skill {

@@ -65,7 +65,7 @@ export default withAuth(
     // We add our session configuration to the system here.
     session,
     images: {
-      upload: "local",
+      upload: "cloud",
       local: {
         baseUrl: "/images",
         storagePath: "public/images",

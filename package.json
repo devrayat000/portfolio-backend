@@ -24,5 +24,6 @@
   },
   "devDependencies": {
     "typescript": "^4.5.2"
-  }
+  },
+  "packageManager": "npm@8.1.2"
 }
