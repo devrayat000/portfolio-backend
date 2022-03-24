@@ -10,4 +10,5 @@ deployment*.json
 .env.*
 
 yarn.lock
+.yarnrc
 package-lock.json
