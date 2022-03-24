@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'dev-rayat'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0655CB22027C4E69B1E23925E622FABF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E2919EB8C72F436FA7BE59402048E9B0 }}
           package: .
