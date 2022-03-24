@@ -6,6 +6,7 @@ export const PORT = parseInt(process.env.PORT) ?? 8000;
 // The default value here will work if you've installed Postgres on MacOS using brew
 // One the app is deployed to Heroku, this var will be supplied by the Postgres addon
 export const DATABASE_URL =
+  process.env.APPSETTING_DATABASE_URL ??
   process.env.DATABASE_URL ??
   `postgres://postgres:ppooii12@localhost/portfolio`;
 
