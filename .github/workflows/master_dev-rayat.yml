@@ -20,11 +20,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
+          
+      - uses: azure/appservice-settings@v1
+        with:
+          app-name: 'dev-rayat'
+          app-settings-json: ${{ secrets.APP_SETTINGS }}
 
       - name: yarn install, build, and test
-        with:
-          app-settings-json: ${{ secrets.APP_SETTINGS }}
-      - run: |
+        run: |
           npm i -g yarn
           yarn install --network-timeout 1000000
           yarn build
