@@ -247,4 +247,4 @@ function azureImage<T>() {
 }
 
 // psql --host devrayat-portfolio.postgres.database.azure.com --user devRayat@devrayat-portfolio --port=5432 --dbname postgres
-// postgres://devRayat@devrayat-portfolio:rayatIsAwesome10050!@devrayat-portfolio.postgres.database.azure.com:5432/portfolio
+// postgres://devRayat@portfolio-db:rayatIsAwesome10050!@portfolio-db.postgres.database.azure.com:5432/portfolio
