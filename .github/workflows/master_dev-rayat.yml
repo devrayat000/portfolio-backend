@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - name: npm install, build, and test
+    - name: yarn install, build
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
