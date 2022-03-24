@@ -20,12 +20,23 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
+          
+      - uses: azure/appservice-settings@v1
+        with:
+          app-name: 'my-app'
+          slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
+          app-settings-json: '${{ secrets.APP_SETTINGS }}' 
+          connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+          general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "false"}' #'General configuration settings as Key Value pairs'
+        id: settings
+          
+      - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
+      - run: printenv
 
       - name: npm install, build, and test
         run: |
           npm i -g yarn
           yarn install --network-timeout 600000
-          printenv
           yarn build
 
       - name: Upload artifact for deployment job
