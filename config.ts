@@ -19,3 +19,5 @@ export const SESSION_MAX_AGE =
 // A secure value will be set in your Heroku deploy if you use the "Deploy to Heroku" button or follow the instructions in the README
 export const SESSION_SECRET =
   process.env.SESSION_SECRET ?? "-- DEV COOKIE SECRET; CHANGE ME --";
+
+// git remote add azure https://dev-rayat.scm.azurewebsites.net/dev-rayat.git
