@@ -12,9 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: Build
-      app-settings-json: ${{ secrets.APP_SETTINGS }}
 
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +24,7 @@ jobs:
       - name: yarn install, build, and test
         with:
           app-settings-json: ${{ secrets.APP_SETTINGS }}
-      - run: |
+        run: |
           npm i -g yarn
           yarn install --network-timeout 1000000
           yarn build
