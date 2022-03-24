@@ -30,6 +30,7 @@ jobs:
         # deploy to Azure Web App.
         npm i -g yarn
         yarn install --network-timeout 600000
+        printenv
         yarn build
         
     - name: 'Deploy to Azure WebApp'
