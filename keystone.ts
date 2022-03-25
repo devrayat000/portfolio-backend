@@ -78,5 +78,10 @@ export default withAuth(
         origin: ["http://localhost:3000"],
       },
     },
+    experimental: {
+      generateNextGraphqlAPI: true,
+      generateNodeAPI: true,
+      enableNextJsGraphqlApiEndpoint: true,
+    },
   })
 );
