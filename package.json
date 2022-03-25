@@ -7,9 +7,6 @@
   "author": "Zul Ikram Musaddik Rayat <2010050@me.buet.ac.bd>",
   "license": "MIT",
   "private": true,
-  "engines": {
-    "node": "^14.15 || ^16.13"
-  },
   "scripts": {
     "dev": "keystone dev",
     "start": "keystone start",
