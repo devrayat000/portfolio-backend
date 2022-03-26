@@ -124,6 +124,7 @@ type Project {
   demo: String
   description: Project_description_Document
   source: String
+  status: ProjectStatusType
   tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []
@@ -138,11 +139,17 @@ type Project {
     skip: Int! = 0
   ): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
+  publishedAt: DateTime
   createdAt: DateTime
 }
 
 type Project_description_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+enum ProjectStatusType {
+  published
+  draft
 }
 
 input ProjectWhereUniqueInput {
@@ -157,9 +164,18 @@ input ProjectWhereInput {
   title: StringFilter
   demo: StringFilter
   source: StringFilter
+  status: ProjectStatusTypeNullableFilter
   tags: TagManyRelationFilter
   images: ImageManyRelationFilter
+  publishedAt: DateTimeNullableFilter
   createdAt: DateTimeNullableFilter
+}
+
+input ProjectStatusTypeNullableFilter {
+  equals: ProjectStatusType
+  in: [ProjectStatusType!]
+  notIn: [ProjectStatusType!]
+  not: ProjectStatusTypeNullableFilter
 }
 
 input TagManyRelationFilter {
@@ -179,6 +195,8 @@ input ProjectOrderByInput {
   title: OrderDirection
   demo: OrderDirection
   source: OrderDirection
+  status: OrderDirection
+  publishedAt: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -187,8 +205,10 @@ input ProjectUpdateInput {
   demo: String
   description: JSON
   source: String
+  status: ProjectStatusType
   tags: TagRelateToManyForUpdateInput
   images: ImageRelateToManyForUpdateInput
+  publishedAt: DateTime
   createdAt: DateTime
 }
 
@@ -216,8 +236,10 @@ input ProjectCreateInput {
   demo: String
   description: JSON
   source: String
+  status: ProjectStatusType
   tags: TagRelateToManyForCreateInput
   images: ImageRelateToManyForCreateInput
+  publishedAt: DateTime
   createdAt: DateTime
 }
 

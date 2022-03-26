@@ -2,21 +2,17 @@
 // See.. https://github.com/keystonejs/keystone/tree/master/examples/with-auth
 
 import { list } from "@keystone-6/core";
-import {
-  password,
-  relationship,
-  text,
-  timestamp,
-  image,
-  virtual,
-  select,
-  integer,
-} from "@keystone-6/core/fields";
-import { document } from "@keystone-6/fields-document";
-import { azureStorageImage } from "@k6-contrib/fields-azure";
+import { password, text, timestamp } from "@keystone-6/core/fields";
 
 import { Lists } from ".keystone/types";
+
 import { hasApiKey, isAdmin } from "./utils/access";
+import { Project } from "./models/project";
+import { Image } from "./models/image";
+import { Tag } from "./models/tag";
+import { Education } from "./models/education";
+import { Skill } from "./models/skill";
+import { Service } from "./models/service";
 
 export const lists: Lists = {
   Admin: list({
@@ -45,96 +41,6 @@ export const lists: Lists = {
       createdAt: timestamp({ defaultValue: { kind: "now" } }),
     },
   }),
-  Project: list({
-    access: {
-      operation: {
-        query: hasApiKey,
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
-      },
-    },
-    fields: {
-      title: text({
-        validation: { isRequired: true },
-        db: { isNullable: false },
-      }),
-      demo: text(),
-      description: document({
-        formatting: true,
-        links: true,
-        dividers: true,
-        layouts: [
-          [1, 1],
-          [1, 1, 1],
-          [2, 1],
-          [1, 2],
-          [1, 2, 1],
-        ],
-      }),
-      source: text(),
-      tags: relationship({
-        ref: "Tag.projects",
-        ui: {
-          displayMode: "cards",
-          cardFields: ["name"],
-          inlineEdit: { fields: ["name"] },
-          linkToItem: true,
-          inlineConnect: true,
-          inlineCreate: { fields: ["name"] },
-        },
-        many: true,
-      }),
-      images: relationship({
-        ref: "Image",
-        many: true,
-        ui: {
-          displayMode: "cards",
-          cardFields: ["image", "label"],
-          inlineEdit: { fields: ["image", "label"] },
-          linkToItem: true,
-          inlineConnect: true,
-          inlineCreate: { fields: ["image", "label"] },
-        },
-      }),
-      createdAt: timestamp({ defaultValue: { kind: "now" } }),
-    },
-  }),
-  Image: list({
-    access: {
-      operation: {
-        query: hasApiKey,
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
-      },
-    },
-    fields: {
-      label: text(),
-      image: azureImage(),
-      createdAt: timestamp({ defaultValue: { kind: "now" } }),
-    },
-  }),
-  Tag: list({
-    access: {
-      operation: {
-        query: hasApiKey,
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
-      },
-    },
-    ui: {
-      isHidden: true,
-    },
-    fields: {
-      name: text({
-        validation: { isRequired: true },
-        db: { isNullable: false },
-      }),
-      projects: relationship({ ref: "Project.tags", many: true }),
-    },
-  }),
   ApiKey: list({
     access: {
       operation: {
@@ -148,103 +54,10 @@ export const lists: Lists = {
       createdAt: timestamp({ defaultValue: { kind: "now" } }),
     },
   }),
-  Service: list({
-    access: {
-      operation: {
-        query: hasApiKey,
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
-      },
-    },
-    fields: {
-      title: text({
-        validation: { isRequired: true },
-        db: { isNullable: false },
-      }),
-      details: text({
-        validation: { isRequired: true },
-        db: { isNullable: false },
-      }),
-      image: azureImage(),
-    },
-  }),
-  Skill: list({
-    access: {
-      operation: {
-        query: hasApiKey,
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
-      },
-    },
-    fields: {
-      type: select({
-        type: "enum",
-        db: { isNullable: false },
-        defaultValue: "dev",
-        options: [
-          { label: "Language", value: "lang" },
-          { label: "Development", value: "dev" },
-        ],
-      }),
-      label: text({
-        validation: { isRequired: true },
-        db: { isNullable: false },
-      }),
-      value: integer({
-        defaultValue: 100,
-        db: { isNullable: false },
-        validation: { isRequired: true, min: 0, max: 100 },
-      }),
-    },
-  }),
-  Education: list({
-    access: {
-      operation: {
-        query: hasApiKey,
-        create: isAdmin,
-        update: isAdmin,
-        delete: isAdmin,
-      },
-    },
-    fields: {
-      title: text({
-        validation: { isRequired: true },
-        db: { isNullable: false },
-      }),
-      passed: timestamp({ db: { isNullable: false } }),
-      certificate: text(),
-      description: document({
-        formatting: true,
-        links: true,
-        dividers: true,
-        layouts: [
-          [1, 1],
-          [1, 1, 1],
-          [2, 1],
-          [1, 2],
-          [1, 2, 1],
-        ],
-      }),
-    },
-  }),
+  Project,
+  Image,
+  Tag,
+  Service,
+  Skill,
+  Education,
 };
-
-function azureImage<T>() {
-  return azureStorageImage<T>({
-    azureStorageConfig: {
-      azureStorageOptions: {
-        accessKey: process.env.AZURE_STORAGE_KEY || "",
-        account: process.env.AZURE_STORAGE_ACCOUNT || "",
-        container: process.env.AZURE_STORAGE_CONTAINER || "",
-        url: process.env.AZURE_STORAGE_ACCOUNT_HOST
-          ? `${process.env.AZURE_STORAGE_ACCOUNT_HOST}${process.env.AZURE_STORAGE_ACCOUNT_NAME}`
-          : undefined,
-      },
-    },
-  });
-}
-
-// psql --host portfolio-db.postgres.database.azure.com --user devRayat@portfolio-db --port=5432 --dbname postgres
-// postgres://devRayat@portfolio-db:rayatIsAwesome10050!@portfolio-db.postgres.database.azure.com:5432/portfolio

@@ -20,14 +20,16 @@ model Admin {
 }
 
 model Project {
-  id          String    @id @default(cuid())
-  title       String    @default("")
-  demo        String    @default("")
-  description Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  source      String    @default("")
-  tags        Tag[]     @relation("Project_tags")
-  images      Image[]   @relation("Project_images")
-  createdAt   DateTime? @default(now())
+  id          String             @id @default(cuid())
+  title       String             @default("")
+  demo        String             @default("")
+  description Json               @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  source      String             @default("")
+  status      ProjectStatusType? @default(draft)
+  tags        Tag[]              @relation("Project_tags")
+  images      Image[]            @relation("Project_images")
+  publishedAt DateTime?
+  createdAt   DateTime?          @default(now())
 }
 
 model Image {
@@ -77,6 +79,11 @@ model Education {
   passed      DateTime
   certificate String   @default("")
   description Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
+enum ProjectStatusType {
+  published
+  draft
 }
 
 enum SkillTypeType {
