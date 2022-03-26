@@ -26,7 +26,11 @@ export default withAuth(
       port: PORT,
       cors: {
         credentials: true,
-        origin: ["http://localhost:3000", "https://www.devrayat.me"],
+        origin: [
+          "http://localhost:3000",
+          "https://www.devrayat.me",
+          "https://devrayat.me",
+        ],
       },
     },
     lists,
@@ -43,7 +47,11 @@ export default withAuth(
       playground: process.env.NODE_ENV !== "production",
       cors: {
         credentials: true,
-        origin: ["http://localhost:3000", "https://www.devrayat.me"],
+        origin: [
+          "http://localhost:3000",
+          "https://devrayat.me",
+          "https://www.devrayat.me",
+        ],
       },
     },
   })
