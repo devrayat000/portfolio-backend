@@ -118,6 +118,41 @@ input AdminCreateInput {
   createdAt: DateTime
 }
 
+type ApiKey {
+  id: ID!
+  createdAt: DateTime
+}
+
+input ApiKeyWhereUniqueInput {
+  id: ID
+}
+
+input ApiKeyWhereInput {
+  AND: [ApiKeyWhereInput!]
+  OR: [ApiKeyWhereInput!]
+  NOT: [ApiKeyWhereInput!]
+  id: IDFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ApiKeyOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ApiKeyUpdateInput {
+  createdAt: DateTime
+}
+
+input ApiKeyUpdateArgs {
+  where: ApiKeyWhereUniqueInput!
+  data: ApiKeyUpdateInput!
+}
+
+input ApiKeyCreateInput {
+  createdAt: DateTime
+}
+
 type Project {
   id: ID!
   title: String
@@ -386,41 +421,6 @@ input ProjectRelateToManyForCreateInput {
   connect: [ProjectWhereUniqueInput!]
 }
 
-type ApiKey {
-  id: ID!
-  createdAt: DateTime
-}
-
-input ApiKeyWhereUniqueInput {
-  id: ID
-}
-
-input ApiKeyWhereInput {
-  AND: [ApiKeyWhereInput!]
-  OR: [ApiKeyWhereInput!]
-  NOT: [ApiKeyWhereInput!]
-  id: IDFilter
-  createdAt: DateTimeNullableFilter
-}
-
-input ApiKeyOrderByInput {
-  id: OrderDirection
-  createdAt: OrderDirection
-}
-
-input ApiKeyUpdateInput {
-  createdAt: DateTime
-}
-
-input ApiKeyUpdateArgs {
-  where: ApiKeyWhereUniqueInput!
-  data: ApiKeyUpdateInput!
-}
-
-input ApiKeyCreateInput {
-  createdAt: DateTime
-}
-
 type Service {
   id: ID!
   title: String
@@ -620,6 +620,12 @@ type Mutation {
   updateAdmins(data: [AdminUpdateArgs!]!): [Admin]
   deleteAdmin(where: AdminWhereUniqueInput!): Admin
   deleteAdmins(where: [AdminWhereUniqueInput!]!): [Admin]
+  createApiKey(data: ApiKeyCreateInput!): ApiKey
+  createApiKeys(data: [ApiKeyCreateInput!]!): [ApiKey]
+  updateApiKey(where: ApiKeyWhereUniqueInput!, data: ApiKeyUpdateInput!): ApiKey
+  updateApiKeys(data: [ApiKeyUpdateArgs!]!): [ApiKey]
+  deleteApiKey(where: ApiKeyWhereUniqueInput!): ApiKey
+  deleteApiKeys(where: [ApiKeyWhereUniqueInput!]!): [ApiKey]
   createProject(data: ProjectCreateInput!): Project
   createProjects(data: [ProjectCreateInput!]!): [Project]
   updateProject(
@@ -641,12 +647,6 @@ type Mutation {
   updateTags(data: [TagUpdateArgs!]!): [Tag]
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
-  createApiKey(data: ApiKeyCreateInput!): ApiKey
-  createApiKeys(data: [ApiKeyCreateInput!]!): [ApiKey]
-  updateApiKey(where: ApiKeyWhereUniqueInput!, data: ApiKeyUpdateInput!): ApiKey
-  updateApiKeys(data: [ApiKeyUpdateArgs!]!): [ApiKey]
-  deleteApiKey(where: ApiKeyWhereUniqueInput!): ApiKey
-  deleteApiKeys(where: [ApiKeyWhereUniqueInput!]!): [ApiKey]
   createService(data: ServiceCreateInput!): Service
   createServices(data: [ServiceCreateInput!]!): [Service]
   updateService(
@@ -709,6 +709,14 @@ type Query {
   ): [Admin!]
   admin(where: AdminWhereUniqueInput!): Admin
   adminsCount(where: AdminWhereInput! = {}): Int
+  apiKeys(
+    where: ApiKeyWhereInput! = {}
+    orderBy: [ApiKeyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ApiKey!]
+  apiKey(where: ApiKeyWhereUniqueInput!): ApiKey
+  apiKeysCount(where: ApiKeyWhereInput! = {}): Int
   projects(
     where: ProjectWhereInput! = {}
     orderBy: [ProjectOrderByInput!]! = []
@@ -733,14 +741,6 @@ type Query {
   ): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
   tagsCount(where: TagWhereInput! = {}): Int
-  apiKeys(
-    where: ApiKeyWhereInput! = {}
-    orderBy: [ApiKeyOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ApiKey!]
-  apiKey(where: ApiKeyWhereUniqueInput!): ApiKey
-  apiKeysCount(where: ApiKeyWhereInput! = {}): Int
   services(
     where: ServiceWhereInput! = {}
     orderBy: [ServiceOrderByInput!]! = []

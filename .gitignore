@@ -3,6 +3,7 @@ node_modules
 
 # Keystone build files
 .keystone
+.next
 
 deployment*.json
 
@@ -12,3 +13,7 @@ deployment*.json
 # yarn.lock
 # .yarnrc
 package-lock.json
+
+# azurite
+*_blob_*.json
+__blobstorage__

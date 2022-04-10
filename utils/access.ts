@@ -39,9 +39,6 @@ export const isSameDomain = ({ context }: Param) => {
   const current = context.req.headers.host
   const requestUrl = new URL('/', context.req.headers.origin)
 
-  console.log(current)
-  console.log(requestUrl.host)
-
   return current === requestUrl.host
 }
 

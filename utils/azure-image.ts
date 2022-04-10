@@ -1,16 +1,19 @@
-import { azureStorageImage } from "@k6-contrib/fields-azure";
+import { azureStorageImage } from '@k6-contrib/fields-azure'
+import crypto from 'node:crypto'
 
 export function azureImage<T>() {
+  const key = process.env.AZURE_STORAGE_KEY,
+    account = process.env.AZURE_STORAGE_ACCOUNT,
+    container = process.env.AZURE_STORAGE_CONTAINER,
+    host = process.env.AZURE_STORAGE_ACCOUNT_HOST
   return azureStorageImage<T>({
     azureStorageConfig: {
       azureStorageOptions: {
-        accessKey: process.env.AZURE_STORAGE_KEY || "",
-        account: process.env.AZURE_STORAGE_ACCOUNT || "",
-        container: process.env.AZURE_STORAGE_CONTAINER || "",
-        url: process.env.AZURE_STORAGE_ACCOUNT_HOST
-          ? `${process.env.AZURE_STORAGE_ACCOUNT_HOST}${process.env.AZURE_STORAGE_ACCOUNT_NAME}`
-          : undefined,
+        accessKey: key,
+        account: account,
+        container: container,
+        url: `${host}/${account}`,
       },
     },
-  });
+  })
 }
