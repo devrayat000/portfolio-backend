@@ -8,14 +8,14 @@ import { Prisma } from '.prisma/client'
 import { hasApiKey, isAdmin } from '../utils/access'
 
 export const Project: Lists['Project'] = list({
-  access: {
-    operation: {
-      query: hasApiKey,
-      create: isAdmin,
-      update: isAdmin,
-      delete: isAdmin,
-    },
-  },
+  // access: {
+  //   operation: {
+  //     query: hasApiKey,
+  //     create: isAdmin,
+  //     update: isAdmin,
+  //     delete: isAdmin,
+  //   },
+  // },
   fields: {
     title: text({
       validation: { isRequired: true },
