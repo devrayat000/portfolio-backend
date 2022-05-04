@@ -12,11 +12,27 @@ generator client {
 }
 
 model Admin {
-  id        String    @id @default(cuid())
-  name      String    @default("")
-  email     String    @unique @default("")
-  password  String
-  createdAt DateTime? @default(now())
+  id             String              @id @default(cuid())
+  name           String              @default("")
+  email          String              @unique @default("")
+  password       String
+  age            Int                 @default(20)
+  residence      String              @default("")
+  freelance      AdminFreelanceType? @default(available)
+  address        String              @default("")
+  languageSkills LanguageSkill[]     @relation("LanguageSkill_user")
+  createdAt      DateTime?           @default(now())
+}
+
+model LanguageSkill {
+  id       String                 @id @default(cuid())
+  language String                 @unique @default("")
+  value    Int                    @default(50)
+  type     LanguageSkillTypeType? @default(programming)
+  user     Admin?                 @relation("LanguageSkill_user", fields: [userId], references: [id])
+  userId   String?                @map("user")
+
+  @@index([userId])
 }
 
 model ApiKey {
@@ -79,6 +95,16 @@ model Education {
   passed      DateTime
   certificate String   @default("")
   description Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
+enum AdminFreelanceType {
+  available
+  unavailable
+}
+
+enum LanguageSkillTypeType {
+  programming
+  human
 }
 
 enum ProjectStatusType {

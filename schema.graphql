@@ -6,11 +6,27 @@ type Admin {
   name: String
   email: String
   password: PasswordState
+  age: Int
+  residence: String
+  freelance: AdminFreelanceType
+  address: String
+  languageSkills(
+    where: LanguageSkillWhereInput! = {}
+    orderBy: [LanguageSkillOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [LanguageSkill!]
+  languageSkillsCount(where: LanguageSkillWhereInput! = {}): Int
   createdAt: DateTime
 }
 
 type PasswordState {
   isSet: Boolean!
+}
+
+enum AdminFreelanceType {
+  available
+  unavailable
 }
 
 scalar DateTime
@@ -28,6 +44,11 @@ input AdminWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  age: IntFilter
+  residence: StringFilter
+  freelance: AdminFreelanceTypeNullableFilter
+  address: StringFilter
+  languageSkills: LanguageSkillManyRelationFilter
   createdAt: DateTimeNullableFilter
 }
 
@@ -76,6 +97,30 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input AdminFreelanceTypeNullableFilter {
+  equals: AdminFreelanceType
+  in: [AdminFreelanceType!]
+  notIn: [AdminFreelanceType!]
+  not: AdminFreelanceTypeNullableFilter
+}
+
+input LanguageSkillManyRelationFilter {
+  every: LanguageSkillWhereInput
+  some: LanguageSkillWhereInput
+  none: LanguageSkillWhereInput
+}
+
 input DateTimeNullableFilter {
   equals: DateTime
   in: [DateTime!]
@@ -91,6 +136,10 @@ input AdminOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  age: OrderDirection
+  residence: OrderDirection
+  freelance: OrderDirection
+  address: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -103,7 +152,19 @@ input AdminUpdateInput {
   name: String
   email: String
   password: String
+  age: Int
+  residence: String
+  freelance: AdminFreelanceType
+  address: String
+  languageSkills: LanguageSkillRelateToManyForUpdateInput
   createdAt: DateTime
+}
+
+input LanguageSkillRelateToManyForUpdateInput {
+  disconnect: [LanguageSkillWhereUniqueInput!]
+  set: [LanguageSkillWhereUniqueInput!]
+  create: [LanguageSkillCreateInput!]
+  connect: [LanguageSkillWhereUniqueInput!]
 }
 
 input AdminUpdateArgs {
@@ -115,7 +176,90 @@ input AdminCreateInput {
   name: String
   email: String
   password: String
+  age: Int
+  residence: String
+  freelance: AdminFreelanceType
+  address: String
+  languageSkills: LanguageSkillRelateToManyForCreateInput
   createdAt: DateTime
+}
+
+input LanguageSkillRelateToManyForCreateInput {
+  create: [LanguageSkillCreateInput!]
+  connect: [LanguageSkillWhereUniqueInput!]
+}
+
+type LanguageSkill {
+  id: ID!
+  language: String
+  value: Int
+  type: LanguageSkillTypeType
+  user: Admin
+}
+
+enum LanguageSkillTypeType {
+  programming
+  human
+}
+
+input LanguageSkillWhereUniqueInput {
+  id: ID
+  language: String
+}
+
+input LanguageSkillWhereInput {
+  AND: [LanguageSkillWhereInput!]
+  OR: [LanguageSkillWhereInput!]
+  NOT: [LanguageSkillWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  value: IntFilter
+  type: LanguageSkillTypeTypeNullableFilter
+  user: AdminWhereInput
+}
+
+input LanguageSkillTypeTypeNullableFilter {
+  equals: LanguageSkillTypeType
+  in: [LanguageSkillTypeType!]
+  notIn: [LanguageSkillTypeType!]
+  not: LanguageSkillTypeTypeNullableFilter
+}
+
+input LanguageSkillOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  value: OrderDirection
+  type: OrderDirection
+}
+
+input LanguageSkillUpdateInput {
+  language: String
+  value: Int
+  type: LanguageSkillTypeType
+  user: AdminRelateToOneForUpdateInput
+}
+
+input AdminRelateToOneForUpdateInput {
+  create: AdminCreateInput
+  connect: AdminWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LanguageSkillUpdateArgs {
+  where: LanguageSkillWhereUniqueInput!
+  data: LanguageSkillUpdateInput!
+}
+
+input LanguageSkillCreateInput {
+  language: String
+  value: Int
+  type: LanguageSkillTypeType
+  user: AdminRelateToOneForCreateInput
+}
+
+input AdminRelateToOneForCreateInput {
+  create: AdminCreateInput
+  connect: AdminWhereUniqueInput
 }
 
 type ApiKey {
@@ -507,17 +651,6 @@ input SkillTypeTypeNullableFilter {
   not: SkillTypeTypeNullableFilter
 }
 
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntFilter
-}
-
 input SkillOrderByInput {
   id: OrderDirection
   type: OrderDirection
@@ -620,6 +753,17 @@ type Mutation {
   updateAdmins(data: [AdminUpdateArgs!]!): [Admin]
   deleteAdmin(where: AdminWhereUniqueInput!): Admin
   deleteAdmins(where: [AdminWhereUniqueInput!]!): [Admin]
+  createLanguageSkill(data: LanguageSkillCreateInput!): LanguageSkill
+  createLanguageSkills(data: [LanguageSkillCreateInput!]!): [LanguageSkill]
+  updateLanguageSkill(
+    where: LanguageSkillWhereUniqueInput!
+    data: LanguageSkillUpdateInput!
+  ): LanguageSkill
+  updateLanguageSkills(data: [LanguageSkillUpdateArgs!]!): [LanguageSkill]
+  deleteLanguageSkill(where: LanguageSkillWhereUniqueInput!): LanguageSkill
+  deleteLanguageSkills(
+    where: [LanguageSkillWhereUniqueInput!]!
+  ): [LanguageSkill]
   createApiKey(data: ApiKeyCreateInput!): ApiKey
   createApiKeys(data: [ApiKeyCreateInput!]!): [ApiKey]
   updateApiKey(where: ApiKeyWhereUniqueInput!, data: ApiKeyUpdateInput!): ApiKey
@@ -709,6 +853,14 @@ type Query {
   ): [Admin!]
   admin(where: AdminWhereUniqueInput!): Admin
   adminsCount(where: AdminWhereInput! = {}): Int
+  languageSkills(
+    where: LanguageSkillWhereInput! = {}
+    orderBy: [LanguageSkillOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [LanguageSkill!]
+  languageSkill(where: LanguageSkillWhereUniqueInput!): LanguageSkill
+  languageSkillsCount(where: LanguageSkillWhereInput! = {}): Int
   apiKeys(
     where: ApiKeyWhereInput! = {}
     orderBy: [ApiKeyOrderByInput!]! = []
