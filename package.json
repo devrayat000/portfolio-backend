@@ -17,18 +17,20 @@
     "build": "keystone build && keystone prisma migrate deploy",
     "postinstall": "keystone postinstall"
   },
-  "devDependencies": {
-    "@babel/core": ">=7.0.0 <8.0.0",
-    "@k6-contrib/fields-azure": "^1.1.0",
+  "dependencies": {
     "@keystone-6/auth": "^2.0.0",
     "@keystone-6/core": "^1.1.0",
+    "@k6-contrib/fields-azure": "^1.1.0",
     "@keystone-6/fields-document": "^2.0.0",
+    "graphql": "0.13.1 - 16",
+    "graphql-upload": "^13.0.0",
+    "prisma": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": ">=7.0.0 <8.0.0",
     "@prisma/client": "latest",
     "@prisma/generator-helper": "*",
     "@types/node": "^17.0.23",
-    "graphql": "0.13.1 - 16",
-    "graphql-upload": "^13.0.0",
-    "prisma": "latest",
     "react": ">=17.0.2 <18.0.0",
     "react-dom": ">=17.0.2 <18.0.0",
     "typescript": "^4.5.2"
