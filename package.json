@@ -15,12 +15,13 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build && keystone prisma migrate deploy",
+    "build:dev": "keystone build",
     "postinstall": "keystone postinstall"
   },
   "dependencies": {
+    "@k6-contrib/fields-azure": "^1.1.0",
     "@keystone-6/auth": "^2.0.0",
     "@keystone-6/core": "^1.1.0",
-    "@k6-contrib/fields-azure": "^1.1.0",
     "@keystone-6/fields-document": "^2.0.0",
     "graphql": "0.13.1 - 16",
     "graphql-upload": "^13.0.0",

@@ -1,5 +1,4 @@
 import { azureStorageImage } from '@k6-contrib/fields-azure'
-import crypto from 'node:crypto'
 
 export function azureImage<T>() {
   const key = process.env.AZURE_STORAGE_KEY,
@@ -12,7 +11,7 @@ export function azureImage<T>() {
         accessKey: key,
         account: account,
         container: container,
-        url: `${host}/${account}`,
+        url: host && `${host}/${account}`,
       },
     },
   })
