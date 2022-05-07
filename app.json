@@ -10,6 +10,18 @@
     "SESSION_SECRET": {
       "description": "A secret key for verifying the integrity of signed cookies.",
       "generator": "secret"
+    },
+    "DATABASE_URL": {
+      "description": "Postgres Database URL."
+    },
+    "AZURE_STORAGE_KEY": {
+      "description": "Azure Blob Storage key."
+    },
+    "AZURE_STORAGE_CONTAINER": {
+      "description": "Azure Blob Storage container."
+    },
+    "AZURE_STORAGE_ACCOUNT": {
+      "description": "Azure Blob Storage account."
     }
   },
   "formation": {
@@ -17,11 +29,5 @@
       "quantity": 1,
       "size": "free"
     }
-  },
-  "addons": [
-    {
-      "plan": "heroku-postgresql:hobby-dev",
-      "options": { "version": "13" }
-    }
-  ]
+  }
 }
