@@ -10,7 +10,7 @@ import { isProd } from './env'
 export function image<T extends BaseListTypeInfo>(
   config?: ImageFieldConfig<T>
 ) {
-  return isProd() ? baseImage<T>(config) : cloudinaryImage<T>(config)
+  return !isProd() ? baseImage<T>(config) : cloudinaryImage<T>(config)
 }
 
 export function cloudinaryImage<T extends BaseListTypeInfo>(
