@@ -1,6 +1,6 @@
 // 3000 is standard for node apps
 
-import { isProd } from './utils/env'
+import { env, isProd } from './utils/env'
 
 // Once deployed, Heroku will supply this var to your app
 export const PORT = isProd() ? parseInt(process.env.PORT) : 8000
@@ -13,9 +13,7 @@ export const DATABASE_URL = isProd()
   : `postgres://postgres:ppooii12@localhost/portfolio`
 
 // Default to 30 days
-export const SESSION_MAX_AGE = isProd()
-  ? parseInt(process.env.SESSION_MAX_AGE)
-  : 60 * 60 * 24 * 30
+export const SESSION_MAX_AGE = env.int('SESSION_MAX_AGE', 60 * 60 * 24 * 30)
 
 // If the environment doesn't supply a value, default the secret to a secure random string
 // This will cause all cookies to be invalidated with each app restart (annoying but better than having a hardcoded default)
