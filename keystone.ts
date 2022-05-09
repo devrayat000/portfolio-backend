@@ -6,6 +6,7 @@ import { config } from '@keystone-6/core'
 import { lists } from './schema'
 import { PORT, DATABASE_URL } from './config'
 import { withAuth, session } from './auth'
+import { isProd } from './utils/env'
 
 // We wrap our config using the withAuth function. This will inject all
 // the extra config required to add support for authentication in our system.
@@ -15,7 +16,7 @@ export default withAuth(
       provider: 'postgresql',
       useMigrations: true,
       url: DATABASE_URL,
-      enableLogging: process.env.NODE_ENV !== 'production',
+      enableLogging: !isProd(),
       idField: { kind: 'cuid' },
     },
     ui: {
@@ -37,16 +38,16 @@ export default withAuth(
     // We add our session configuration to the system here.
     session,
     images: {
-      upload: 'cloud',
+      upload: isProd() ? 'cloud' : 'local',
       local: {
         baseUrl: '/images',
         storagePath: 'public/images',
       },
     },
     graphql: {
-      playground: process.env.NODE_ENV !== 'production',
+      playground: !isProd(),
       cors: {
-        credentials: true,
+        credentials: isProd(),
         origin: [
           'http://localhost:3000',
           'https://devrayat.me',

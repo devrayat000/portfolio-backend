@@ -1,8 +1,9 @@
 import { list } from '@keystone-6/core'
 import { text, timestamp } from '@keystone-6/core/fields'
+
 import { hasApiKey, isAdmin } from '../utils/access'
-import { azureImage } from '../utils/azure-image'
 import { Lists } from '.keystone/types'
+import { image } from '../utils/image'
 
 export const Image: Lists['Image'] = list({
   // access: {
@@ -14,8 +15,11 @@ export const Image: Lists['Image'] = list({
   //   },
   // },
   fields: {
-    label: text(),
-    image: azureImage(),
+    label: text({
+      validation: { isRequired: true },
+      db: { isNullable: false },
+    }),
+    image: image(),
     createdAt: timestamp({ defaultValue: { kind: 'now' } }),
   },
 })

@@ -5,6 +5,7 @@ import { Lists } from '.keystone/types'
 
 import { hasApiKey, isAdmin } from '../utils/access'
 import { azureImage } from '../utils/azure-image'
+import { image } from '../utils/image'
 
 export const Service: Lists['Service'] = list({
   // access: {
@@ -24,6 +25,6 @@ export const Service: Lists['Service'] = list({
       validation: { isRequired: true },
       db: { isNullable: false },
     }),
-    image: azureImage(),
+    image: image(),
   },
 })
