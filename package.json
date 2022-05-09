@@ -16,10 +16,9 @@
     "start": "keystone start",
     "build": "keystone build && keystone prisma migrate deploy",
     "build:dev": "keystone build",
-    "postinstall": "keystone postinstall"
+    "postinstall": "keystone postinstall --fix"
   },
   "dependencies": {
-    "@k6-contrib/fields-azure": "^1.1.0",
     "@keystone-6/auth": "^2.0.0",
     "@keystone-6/cloudinary": "^2.0.0",
     "@keystone-6/core": "^1.1.0",

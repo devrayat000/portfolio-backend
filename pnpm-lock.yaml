@@ -2,7 +2,6 @@ lockfileVersion: 5.3
 
 specifiers:
   '@babel/core': '>=7.0.0 <8.0.0'
-  '@k6-contrib/fields-azure': ^1.1.0
   '@keystone-6/auth': ^2.0.0
   '@keystone-6/cloudinary': ^2.0.0
   '@keystone-6/core': ^1.1.0
@@ -18,7 +17,6 @@ specifiers:
   typescript: ^4.5.2
 
 dependencies:
-  '@k6-contrib/fields-azure': 1.1.0_c047538132cdc56d239d0a886e3e6676
   '@keystone-6/auth': 2.0.0_26d44c5add958272c14c6fa261947ec0
   '@keystone-6/cloudinary': 2.0.0_26b14df2acca72de521edcbf6cb0d5ec
   '@keystone-6/core': 1.1.0_@prisma+generator-helper@3.11.0
@@ -300,22 +298,6 @@ packages:
     transitivePeerDependencies:
       - debug
       - supports-color
-    dev: false
-
-  /@azure/storage-blob/12.9.0:
-    resolution: {integrity: sha512-ank38FdCLfJ+EoeMzCz3hkYJuZAd63ARvDKkxZYRDb+beBYf+/+gx8jNTqkq/hfyUl4dJQ/a7tECU0Y0F98CHg==}
-    engines: {node: '>=12.0.0'}
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/core-http': 2.2.4
-      '@azure/core-lro': 2.2.4
-      '@azure/core-paging': 1.2.1
-      '@azure/core-tracing': 1.0.0-preview.13
-      '@azure/logger': 1.0.3
-      events: 3.3.0
-      tslib: 2.3.1
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /@babel/code-frame/7.16.7:
@@ -756,39 +738,6 @@ packages:
 
   /@js-joda/core/4.3.1:
     resolution: {integrity: sha512-oeaetlodcqVsiZDxnEcqsbs+sXBkASxua0mXs5OXuPQXz3/wdPTMlxwfQ4z2HKcOik3S9voW3QJkp/KLWDhvRQ==}
-    dev: false
-
-  /@k6-contrib/fields-azure/1.1.0_c047538132cdc56d239d0a886e3e6676:
-    resolution: {integrity: sha512-9ivioKwJ3CLPqTZtSQTLSBBc1iDIBaaW+CMR/x3jEXx37lpvHb8hncqUaJV6yiPle378VT343BRol8inzDcsww==}
-    engines: {node: ^12.20 || >= 14.13}
-    peerDependencies:
-      '@keystone-6/core': ^1.1.0
-      graphql-upload: ^13.0.0
-      react: ^17.0.2
-    dependencies:
-      '@azure/storage-blob': 12.9.0
-      '@babel/runtime': 7.17.9
-      '@keystone-6/core': 1.1.0_@prisma+generator-helper@3.11.0
-      '@keystone-ui/button': 6.0.0_22cb54b68a80708d387f9d052c7c933b
-      '@keystone-ui/core': 4.0.0_f370f735164a03a12cea0cc89593cbee
-      '@keystone-ui/fields': 6.0.1_22cb54b68a80708d387f9d052c7c933b
-      '@keystone-ui/pill': 6.0.0_f370f735164a03a12cea0cc89593cbee
-      '@keystone-ui/toast': 5.0.0_f370f735164a03a12cea0cc89593cbee
-      '@sindresorhus/slugify': 1.1.2
-      bytes: 3.1.2
-      copy-to-clipboard: 3.3.1
-      cuid: 2.1.8
-      filenamify: 4.3.0
-      fs-extra: 10.0.1
-      graphql-upload: 13.0.0_graphql@15.8.0
-      image-size: 1.0.1
-      image-type: 4.1.0
-      react: 17.0.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - encoding
-      - react-dom
     dev: false
 
   /@keystone-6/auth/2.0.0_26d44c5add958272c14c6fa261947ec0:
@@ -1244,22 +1193,6 @@ packages:
       - react-dom
     dev: false
 
-  /@keystone-ui/pill/6.0.0_f370f735164a03a12cea0cc89593cbee:
-    resolution: {integrity: sha512-VFHR+fgTZRNa0JxJKJxMfsRDlsgfTFyJNEjp2tH4qALWvqz891xzjTu+ED8Zp2qfh+PEL8ja2C4E93nmpwjnmQ==}
-    engines: {node: ^14.15 || ^16.13}
-    peerDependencies:
-      react: ^17.0.2
-    dependencies:
-      '@babel/runtime': 7.17.9
-      '@keystone-ui/core': 4.0.0_f370f735164a03a12cea0cc89593cbee
-      '@keystone-ui/icons': 5.0.0_f370f735164a03a12cea0cc89593cbee
-      react: 17.0.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - react-dom
-    dev: false
-
   /@keystone-ui/popover/5.0.1_e9a3ca65276589bcf2cd9ed351b66fe3:
     resolution: {integrity: sha512-616HJ2tUYi/tx46GiN6YhCBkNbL1l1idn80B50QJWOVl2F68lhJoa59+pOcQpdg9Ldjq0CHaNSFfHyoRNJuu5w==}
     engines: {node: ^14.15 || ^16.13}
@@ -1322,22 +1255,6 @@ packages:
       '@babel/runtime': 7.17.9
       '@keystone-ui/core': 4.0.0_e9a3ca65276589bcf2cd9ed351b66fe3
       '@keystone-ui/icons': 5.0.0_e9a3ca65276589bcf2cd9ed351b66fe3
-      react: 17.0.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - react-dom
-    dev: false
-
-  /@keystone-ui/toast/5.0.0_f370f735164a03a12cea0cc89593cbee:
-    resolution: {integrity: sha512-Qiraf17auZmHFwZc9t0KjVyGByBZxd/XdabL83RLcys8VOjsHIscTBY3Ndpid0pO8IRloSG47uW9yJOTxgpFVg==}
-    engines: {node: ^14.15 || ^16.13}
-    peerDependencies:
-      react: ^17.0.2
-    dependencies:
-      '@babel/runtime': 7.17.9
-      '@keystone-ui/core': 4.0.0_f370f735164a03a12cea0cc89593cbee
-      '@keystone-ui/icons': 5.0.0_f370f735164a03a12cea0cc89593cbee
       react: 17.0.2
     transitivePeerDependencies:
       - '@babel/core'
