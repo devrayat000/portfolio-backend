@@ -532,6 +532,7 @@ input ImageCreateInput {
 type Tag {
   id: ID!
   name: String
+  slug: String
   projects(
     where: ProjectWhereInput! = {}
     orderBy: [ProjectOrderByInput!]! = []
