@@ -1,7 +1,7 @@
 function env(name: string): string
 function env(name: string, defaultVal: string): string
 function env(name: string, defaultVal?: string) {
-  return process.env[name] ?? defaultVal
+  return process.env[name] || defaultVal
 }
 
 namespace env {
@@ -20,9 +20,8 @@ namespace env {
   export function array(name: string): string[]
   export function array(name: string, defaultVal: string[]): string[]
   export function array(name: string, defaultVal?: string[]) {
-    return env(name)?.split(',') ?? defaultVal
+    return env(name)?.split(',') || defaultVal
   }
 }
 
-export const isProd = () => env('NODE_ENV') === 'production'
 export { env }

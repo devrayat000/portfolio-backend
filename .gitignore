@@ -9,7 +9,7 @@ deployment*.json
 
 .env
 .env.*
-
+config.json
 # yarn.lock
 # .yarnrc
 package-lock.json

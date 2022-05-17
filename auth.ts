@@ -4,7 +4,7 @@
 import { statelessSessions } from '@keystone-6/core/session'
 import { createAuth } from '@keystone-6/auth'
 
-import { SESSION_MAX_AGE, SESSION_SECRET } from './config'
+import { env } from './utils/env'
 
 // createAuth configures signin functionality based on the config below. Note this only implements
 // authentication, i.e signing in as an item using identity and secret fields in a list. Session
@@ -31,9 +31,9 @@ const { withAuth } = createAuth({
 // This session object will be made available on the context object used in hooks, access-control,
 // resolvers, etc.
 const session = statelessSessions({
-  maxAge: SESSION_MAX_AGE,
+  maxAge: env.int('SESSION_MAX_AGE', 60 * 60 * 24 * 30),
   // The session secret is used to encrypt cookie data (should be an environment variable)
-  secret: SESSION_SECRET,
+  secret: env('SESSION_SECRET', '-- DEV COOKIE SECRET; CHANGE ME --'),
 })
 
 export { session, withAuth }

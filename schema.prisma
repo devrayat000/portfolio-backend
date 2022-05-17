@@ -56,11 +56,7 @@ model Project {
 model Image {
   id                  String    @id @default(cuid())
   label               String    @default("")
-  image_filesize      Int?
-  image_extension     String?
-  image_width         Int?
-  image_height        Int?
-  image_id            String?
+  image               Json?
   createdAt           DateTime? @default(now())
   from_Project_images Project[] @relation("Project_images")
 }
@@ -72,14 +68,10 @@ model Tag {
 }
 
 model Service {
-  id              String  @id @default(cuid())
-  title           String  @default("")
-  details         String  @default("")
-  image_filesize  Int?
-  image_extension String?
-  image_width     Int?
-  image_height    Int?
-  image_id        String?
+  id      String @id @default(cuid())
+  title   String @default("")
+  details String @default("")
+  image   Json?
 }
 
 model Skill {

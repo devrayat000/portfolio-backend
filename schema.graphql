@@ -435,25 +435,57 @@ input ImageRelateToManyForCreateInput {
 type Image {
   id: ID!
   label: String
-  image: AzureStorageImageFieldOutput
+  image: CloudinaryImage_File
   createdAt: DateTime
 }
 
-interface AzureStorageImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: AzureStorageImageExtension!
-  ref: String!
-  url: String!
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
 }
 
-enum AzureStorageImageExtension {
-  jpg
-  png
-  webp
-  gif
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
 }
 
 input ImageWhereUniqueInput {
@@ -477,13 +509,8 @@ input ImageOrderByInput {
 
 input ImageUpdateInput {
   label: String
-  image: AzureStorageImageFieldInput
+  image: Upload
   createdAt: DateTime
-}
-
-input AzureStorageImageFieldInput {
-  upload: Upload
-  ref: String
 }
 
 """
@@ -498,7 +525,7 @@ input ImageUpdateArgs {
 
 input ImageCreateInput {
   label: String
-  image: AzureStorageImageFieldInput
+  image: Upload
   createdAt: DateTime
 }
 
@@ -569,21 +596,11 @@ type Service {
   id: ID!
   title: String
   details: String
-  image: AzureStorageImageFieldOutput
+  image: CloudinaryImage_File
 }
 
 input ServiceWhereUniqueInput {
   id: ID
-}
-
-type AzureStorageImageFieldOutputType implements AzureStorageImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: AzureStorageImageExtension!
-  ref: String!
-  url: String!
 }
 
 input ServiceWhereInput {
@@ -604,7 +621,7 @@ input ServiceOrderByInput {
 input ServiceUpdateInput {
   title: String
   details: String
-  image: AzureStorageImageFieldInput
+  image: Upload
 }
 
 input ServiceUpdateArgs {
@@ -615,7 +632,7 @@ input ServiceUpdateArgs {
 input ServiceCreateInput {
   title: String
   details: String
-  image: AzureStorageImageFieldInput
+  image: Upload
 }
 
 type Skill {

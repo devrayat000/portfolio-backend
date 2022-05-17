@@ -26,7 +26,7 @@ export const hasApiKey = async ({ context }: Param) => {
   if (isSameDomain({ context })) {
     return true
   }
-  const recievedKey = context.req.headers['x-api-key'] as string
+  const recievedKey = context?.req?.headers['x-api-key'] as string
 
   const apiKey = await context.query.ApiKey.findOne({
     where: { id: recievedKey },
@@ -36,8 +36,8 @@ export const hasApiKey = async ({ context }: Param) => {
 }
 
 export const isSameDomain = ({ context }: Param) => {
-  const current = context.req.headers.host
-  const requestUrl = new URL('/', context.req.headers.origin)
+  const current = context?.req?.headers.host
+  const requestUrl = new URL('/', context?.req?.headers.origin)
 
   return current === requestUrl.host
 }

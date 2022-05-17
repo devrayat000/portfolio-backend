@@ -1,12 +1,12 @@
 // Code copied (with some modifications) from the Keystone 6 "with-auth" example
 // See.. https://github.com/keystonejs/keystone/tree/master/examples/with-auth
-
+import 'dotenv/config'
 import { config } from '@keystone-6/core'
 
 import { lists } from './schema'
-import { PORT, DATABASE_URL } from './config'
+import { isDev } from './cf'
 import { withAuth, session } from './auth'
-import { isProd } from './utils/env'
+import { env } from './utils/env'
 
 // We wrap our config using the withAuth function. This will inject all
 // the extra config required to add support for authentication in our system.
@@ -15,8 +15,11 @@ export default withAuth(
     db: {
       provider: 'postgresql',
       useMigrations: true,
-      url: DATABASE_URL,
-      enableLogging: !isProd(),
+      url: env(
+        'DATABASE_URL',
+        'postgresql://postgres:ppooii12@localhost/portfolio'
+      ),
+      enableLogging: isDev(),
       idField: { kind: 'cuid' },
     },
     ui: {
@@ -24,7 +27,7 @@ export default withAuth(
       isAccessAllowed: context => !!context.session?.data,
     },
     server: {
-      port: PORT,
+      port: env.int('PORT', 8000),
       cors: {
         credentials: true,
         origin: [
@@ -38,16 +41,15 @@ export default withAuth(
     // We add our session configuration to the system here.
     session,
     images: {
-      upload: isProd() ? 'cloud' : 'local',
+      upload: 'cloud',
       local: {
         baseUrl: '/images',
         storagePath: 'public/images',
       },
     },
     graphql: {
-      playground: !isProd(),
       cors: {
-        credentials: isProd(),
+        credentials: false,
         origin: [
           'http://localhost:3000',
           'https://devrayat.me',
