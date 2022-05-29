@@ -53,6 +53,17 @@ export const Admin: Lists['Admin'] = list({
       ],
       defaultValue: 'available',
     }),
+    rank: select({
+      type: 'enum',
+      label: 'Developer Rank',
+      ui: { displayMode: 'segmented-control' },
+      options: [
+        { label: 'Full-Stack', value: 'full_stack' },
+        { label: 'Front-end', value: 'front_end' },
+        { label: 'Back-end', value: 'back_end' },
+      ],
+      defaultValue: 'front_end',
+    }),
     address: text(),
     languageSkills: relationship({
       ref: 'LanguageSkill.user',

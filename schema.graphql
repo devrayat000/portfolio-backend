@@ -9,6 +9,7 @@ type Admin {
   age: Int
   residence: String
   freelance: AdminFreelanceType
+  rank: AdminRankType
   address: String
   languageSkills(
     where: LanguageSkillWhereInput! = {}
@@ -29,6 +30,12 @@ enum AdminFreelanceType {
   unavailable
 }
 
+enum AdminRankType {
+  full_stack
+  front_end
+  back_end
+}
+
 scalar DateTime
   @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
@@ -47,6 +54,7 @@ input AdminWhereInput {
   age: IntFilter
   residence: StringFilter
   freelance: AdminFreelanceTypeNullableFilter
+  rank: AdminRankTypeNullableFilter
   address: StringFilter
   languageSkills: LanguageSkillManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -115,6 +123,13 @@ input AdminFreelanceTypeNullableFilter {
   not: AdminFreelanceTypeNullableFilter
 }
 
+input AdminRankTypeNullableFilter {
+  equals: AdminRankType
+  in: [AdminRankType!]
+  notIn: [AdminRankType!]
+  not: AdminRankTypeNullableFilter
+}
+
 input LanguageSkillManyRelationFilter {
   every: LanguageSkillWhereInput
   some: LanguageSkillWhereInput
@@ -139,6 +154,7 @@ input AdminOrderByInput {
   age: OrderDirection
   residence: OrderDirection
   freelance: OrderDirection
+  rank: OrderDirection
   address: OrderDirection
   createdAt: OrderDirection
 }
@@ -155,6 +171,7 @@ input AdminUpdateInput {
   age: Int
   residence: String
   freelance: AdminFreelanceType
+  rank: AdminRankType
   address: String
   languageSkills: LanguageSkillRelateToManyForUpdateInput
   createdAt: DateTime
@@ -179,6 +196,7 @@ input AdminCreateInput {
   age: Int
   residence: String
   freelance: AdminFreelanceType
+  rank: AdminRankType
   address: String
   languageSkills: LanguageSkillRelateToManyForCreateInput
   createdAt: DateTime

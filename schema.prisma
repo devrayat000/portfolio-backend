@@ -19,6 +19,7 @@ model Admin {
   age            Int                 @default(20)
   residence      String              @default("")
   freelance      AdminFreelanceType? @default(available)
+  rank           AdminRankType?      @default(front_end)
   address        String              @default("")
   languageSkills LanguageSkill[]     @relation("LanguageSkill_user")
   createdAt      DateTime?           @default(now())
@@ -92,6 +93,12 @@ model Education {
 enum AdminFreelanceType {
   available
   unavailable
+}
+
+enum AdminRankType {
+  full_stack
+  front_end
+  back_end
 }
 
 enum LanguageSkillTypeType {
