@@ -49,12 +49,15 @@ export default withAuth(
     },
     graphql: {
       cors: {
-        credentials: false,
+        credentials: true,
         origin: [
           'http://localhost:3000',
           'https://devrayat.me',
           'https://www.devrayat.me',
         ],
+      },
+      apolloConfig: {
+        introspection: true,
       },
     },
   })
